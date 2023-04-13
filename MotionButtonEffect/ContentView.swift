@@ -26,23 +26,6 @@ class MotionManager: ObservableObject {
 struct ContentView: View {
     @StateObject private var motion = MotionManager()
     
-    @State var translation: CGSize = .zero
-    @State var isDragging = false
-
-    var drag: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                translation = value.translation
-                isDragging = true
-            }
-            .onEnded { value in
-                withAnimation {
-                    translation = .zero
-                    isDragging = false
-                }
-            }
-    }
-    
     var body: some View {
         ZStack {
             Image("bg")
@@ -69,7 +52,6 @@ struct ContentView: View {
                     )
                     .rotation3DEffect(.degrees(motion.x * 5), axis: (x: 0, y: 1, z: 0))
                     .rotation3DEffect(.degrees(motion.y * 5), axis: (x: -1, y: 0, z: 0))
-                    .gesture(drag)
             }
             
             Text("Join Waitlist")
